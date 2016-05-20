@@ -1,0 +1,20 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+@{ 
+    ViewBag.userName = HttpContext.Current.User.Identity.Name;
+}
+<h2>Index</h2>
+
+@{
+    if (ViewBag.userName == "Cosmin Popescu")
+    {
+        @Html.ActionLink("Creati task-uri", "AddTask", "Tasks", null, htmlAttributes: new { @class = "btn btn-primary" })<br>
+    }
+}
+
+@Html.ActionLink("Vedeti task-urile", "ViewTasks", "Tasks", null, htmlAttributes: new { @class = "btn btn-primary" })
+
+

@@ -1,0 +1,103 @@
+﻿
+@{
+    ViewBag.Title = "ViewTeam";
+}
+@model ProiectLicenta.DTO.EventXTeam
+
+
+<h2>Vizualiati echipa de organizare a evenimentului</h2>
+
+<div id="teamGrid">
+    @(Html.Kendo().Grid<ProiectLicenta.DTO.EventXTeam>()
+            .AutoBind(true)
+            .Name("grid")
+            .Columns(col =>
+            {
+                col.Bound(c => c.Id_Utilizator);
+                col.Bound(c => c.Denumire);
+                col.Bound(c => c.Nume_Utilizator);
+                col.Bound(c => c.Email);
+            })
+            .Selectable(s => s.Mode(GridSelectionMode.Multiple))
+            .Events(e => e.Change("GridSelected"))
+            .DataSource(dataSource => dataSource
+            .Ajax()
+            .Read(read => read.Action("GetTeam", "Events"))
+        )
+    )
+
+</div>
+
+<script>
+    function GridSelected() {
+        var grid = $("#grid").data("kendoGrid");
+        var selected = grid.dataItem(grid.select());
+
+        var Id = selected.Id_Utilizator;
+        var usrName = selected.Nume_Utilizator;
+        $("#myModal").modal('show');//arat fereastra modala
+       
+        document.getElementById("usrId").value = Id;
+        document.getElementById("usrName").value = usrName;
+    }
+</script>
+
+
+<!-- modal bun-->
+<div id="myModal" class="modal fade" aria-labelledby="myModalLabel" aria-hidden="true" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Editati functia</h4>
+            </div>
+            <div class="modal-body" id="myModalBody">
+                Id: <p><input class="form-control" type="text" id="usrId" value="" readonly="readonly"></p>
+                Nume: <p><input class="form-control" type="text" id="usrName" value="" readonly="readonly"></p>
+                Rol:<p>
+                    @(Html.Kendo().DropDownList()
+                                .Name("roles")
+                                .AutoBind(false)
+                                .DataTextField("Denumire")//aici avem denumirea
+                                .DataValueField("Id")//aici avem id
+                                .DataSource(source =>
+                                {
+                                    source.Read(read =>
+                                    {
+                                        read.Action("SelectRoles", "Users");
+                                    });
+                                })
+                )
+            </p>
+
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-success" onclick="SendDetails()">Actualizeaza</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function SendDetails() {
+
+        var fields = {
+            Id: $("#usrId").val(),
+            Id_Functie: $("#roles").val()
+        }
+
+        alert(JSON.stringify(fields));
+        $.ajax({
+            contentType: "application/json; charset=utf-8",
+            url: "/Profile/UpdateUserRole",
+            type: "POST",
+            data: JSON.stringify(fields)
+        });
+        $("#myModal").modal('toggle')
+
+    }
+</script>
+
+
+
+

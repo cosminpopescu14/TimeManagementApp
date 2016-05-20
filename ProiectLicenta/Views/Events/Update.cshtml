@@ -1,0 +1,95 @@
+﻿
+@{
+    ViewBag.Title = "Update";
+}
+
+@model ProiectLicenta.DTO.Events
+
+<h2>Actualizati evenimentul</h2>
+
+@(Html.Kendo().Grid<ProiectLicenta.DTO.Events>()
+            .AutoBind(true)
+            .Name("grid")
+            .Columns(col =>
+            {
+                col.Bound(c => c.Id);
+                col.Bound(c => c.Denumire);
+                col.Bound(c => c.Data_Start);
+                col.Bound(c => c.Data_Sfarsit);
+            })
+            .Selectable(s => s.Mode(GridSelectionMode.Multiple))
+            .Events(e => e.Change("GridSelected"))
+            .DataSource(dataSource => dataSource
+            .Ajax()
+            .Read(read => read.Action("GetEvents", "Events"))
+        )
+)
+
+<script>
+    function GridSelected() {
+        var grid = $("#grid").data("kendoGrid");
+        var selected = grid.dataItem(grid.select());
+
+        var Id = selected.Id;
+        var Denumire = selected.Denumire;
+        var Data_Start = selected.Data_Start;
+        var Data_Sfarsit = selected.Data_Sfarsit;
+        $("#myModal").modal('show');//arat fereastra modala
+
+        document.getElementById("eventId").value = Id;
+        document.getElementById("eventName").value = Denumire;
+    }
+</script>
+
+<!-- modal bun-->
+<div id="myModal" class="modal fade" aria-labelledby="myModalLabel" aria-hidden="true" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Editati evenimentul</h4>
+            </div>
+            <div class="modal-body" id="myModalBody">
+                Id: <p><input class="form-control" type="text" id="eventId" value="" readonly="readonly"></p>
+                Nume eveniment: <p><input class="form-control" type="text" id="eventName" value="" readonly="readonly"></p>
+                Data inceput: <p> @(Html.Kendo().DatePicker()
+                                    .Name("dataStart")
+                                    .HtmlAttributes(new { style = "width: 100%" })
+                                  )
+                               </p>
+                Data sfarsit: <p>
+                                    @(Html.Kendo().DatePicker()
+                                        .Name("dataSfarsit")
+                                        .HtmlAttributes(new { style = "width: 100%" })
+                                    )
+                               </p>
+
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-success" onclick="SendDetails()">Actualizeaza</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function SendDetails() {
+
+        var fields = {
+            Id: $("#eventId").val(),
+            Denumire: $("#eventName").val(),
+            Data_Start: $("#dataStart").val(),
+            Data_Sfarsit: $("#dataSfarsit").val()
+        }
+
+        alert(JSON.stringify(fields));
+        $.ajax({
+            contentType: "application/json; charset=utf-8",
+            url: "/Events/UpdateEvent",
+            type: "POST",
+            data: JSON.stringify(fields)
+        });
+        $("#myModal").modal('toggle')
+
+    }
+</script>

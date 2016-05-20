@@ -1,0 +1,106 @@
+﻿<!--Index Profil-->
+@model ProiectLicenta.Models.Utilizatori
+
+@{
+    ViewBag.Title = HttpContext.Current.User.Identity.Name;
+
+}
+
+@{ 
+    ViewBag.Address = "http://www.google.ro";
+}
+
+@{ 
+    ViewBag.tu = "eu sunt cosmin :)";
+}
+
+
+<h2>@ViewBag.Title</h2>
+
+
+<div class="container ">
+    <div class="row profile">
+        <div class="col-md-3">
+            <div class="profile-sidebar">
+                <!-- SIDEBAR USERPIC -->
+                <!-- END SIDEBAR USERPIC -->
+                <!-- SIDEBAR USER TITLE -->
+                <div class="profile-usertitle">
+                    <div class="profile-usertitle-name">
+
+                    </div>
+                    <div class="profile-usertitle-job">
+                       @foreach (var item in ViewBag.role)
+                       {
+                           @item
+                       }
+                    </div>
+                </div>
+                <div class="profile-usermenu">
+                    <ul class="nav">
+                        <li class="active">
+                            <a href="#">
+                                <i class="glyphicon glyphicon-home"></i>
+                                Overview
+                            </a>
+                        </li>
+                        <li>
+                            @Html.ActionLink("Trimite mail", "Mail", "Profile",  null, htmlAttributes: new { @class = "glyphicon glyphicon-envelope" })
+                        </li>
+
+                        <li>
+                             @Html.ActionLink("Cont", "Account", "Profile", null, htmlAttributes: new { @class = "glyphicon glyphicon-user" })
+                        </li>
+
+                        <li>
+                            @if (HttpContext.Current.User.Identity.Name == "Cosmin Popescu")
+                            {
+                                @Html.ActionLink("Evenimente", "Index", "Events", null, htmlAttributes: new { @class = "glyphicon glyphicon-calendar" })
+                            }
+
+                        </li>
+
+                        <li>
+
+                            @Html.ActionLink("Taskuri", "Index", "Tasks", null, htmlAttributes: new { @class = "glyphicon glyphicon-tasks" })
+
+                        </li>
+
+                        <li>
+                            @Html.ActionLink("Vedeti planificatorul", "Index", "TaskScheduler", null, htmlAttributes: new { @class = "glyphicon glyphicon-list" })
+                        </li>
+                            
+                        <li>
+                            <a href="#">
+                                <i class="glyphicon glyphicon-flag"  ></i>
+                                Help
+                            </a>
+                        </li>
+                        <li>
+                            @Html.ActionLink("Log out", "Logout", "Users")
+                        </li>
+                    </ul>
+                </div>
+                <!-- END MENU -->
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="profile-content">
+                <div id="edit_invoices">
+                
+                    @{ 
+                        if (ViewBag.Title != "Cosmin Popescu")
+                        {
+                            <p>04/05/2016</p>
+                              @:<p>Ati fost adaugat/a in echipa de organizare pt IEEE Conf</p> <p>Task-utile vor fi afisate in cel mai scurt timp</p>
+                        }
+                    }
+
+
+                </div>
+            </div>
+        </div>
+        </div>
+</div>
+<br>
+<br>

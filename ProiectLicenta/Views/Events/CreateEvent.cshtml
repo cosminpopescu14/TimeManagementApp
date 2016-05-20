@@ -1,0 +1,71 @@
+﻿
+@{
+    ViewBag.Title = "CreateEvent";
+}
+
+<h2>Create Event</h2>
+
+
+@model ProiectLicenta.DTO.Events
+
+
+@using (Html.BeginForm())//creare formular inregistrare
+{
+    <label>Numele evenimentului:&nbsp;</label> <input type="text" id="numeEveniment"/>
+    <br>
+    <div>
+        <label>Data de incepere:</label> @(Html.Kendo().DatePicker()
+                .Name("creationDate")
+                .HtmlAttributes(new { style = "width:50%;" })
+                .Format("dd/MM/yyyy")
+        )
+    </div>
+    <br>
+
+    <div>
+        <label>Data sfarsit eveniment:&nbsp;</label> @(Html.Kendo().DatePicker()
+                .Name("endDate")
+                .HtmlAttributes(new { style = "width:50%;" })
+                .Format("dd/MM/yyyy")
+        )
+    </div>
+    <br>
+
+}
+
+<button class="btn btn-default" onclick="CreateEvent()">Creaza eveniment</button> 
+
+<script type="text/javascript">
+    function CreateEvent() {
+
+        if ($("#numeEveniment").val().length == 0 || $("#creationDate").val().length == 0 || $("#creationDate").val().length == 0) {
+            alert('Unul din campuri este gol. Va rugam verificati');
+        }
+
+        else
+            Send();
+    }
+
+    function Send() {
+
+        var event = JSON.stringify({
+
+            Denumire: $("#numeEveniment").val(),
+            Data_Start: $("#creationDate").val(),
+            Data_Sfarsit: $("#endDate").val()
+        });
+
+        $.ajax({
+
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            url: '@Url.Action("AddEvents", "Events")',
+            type: "POST",
+            data: event
+        });
+    }
+</script>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

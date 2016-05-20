@@ -1,0 +1,63 @@
+﻿@if (false)
+{
+   <script src="~/Scripts/jquery-2.1.0-vsdoc.js" type="text/javascript"></script>
+}
+
+@{
+    ViewBag.Title = "AssignTeam";
+}
+
+<h2>AssignTeam</h2>
+
+@(Html.Kendo().DropDownList()
+        .Name("event")
+        .AutoBind(true)
+        .DataTextField("Denumire")//aici avem denumirea
+        .DataValueField("Id")//aici avem id   
+        .DataSource(source =>
+        {
+            source.Read(read =>
+            {
+                read.Action("GetEvents", "Events");
+            });
+
+
+
+        })
+)
+<br>
+@(
+        Html.Kendo().MultiSelect()
+        .Name("usersForTeam")
+        .Placeholder("Selectati oamenii care vor face parte din echpa de organizare.")
+        .DataTextField("Nume_Utilizator")
+        .DataValueField("Id")
+        .DataSource(source => { source.Read(read => read.Action("GetUsers", "Events")); }
+
+ )
+ )
+<br>
+<button class="btn btn-default" onclick="Send()">Creaza echipa</button> 
+
+<script type="text/javascript">
+    
+    function Send() {
+
+        var team = JSON.stringify({
+            Id_Eveniment: $("#event").val(),//ATENTIE. TREBUIE CA NUMELE VARIABILEI SA CORESPUNDA CU NUMELE VARIABILEI DIN MODEL
+            Id_Utilizator: $("#usersForTeam").val()
+
+        });
+
+        $.ajax({
+
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            url: '@Url.Action("CreateTeam", "Events")',
+            type: "POST",
+            data: team
+        });
+        
+    }
+</script>
+

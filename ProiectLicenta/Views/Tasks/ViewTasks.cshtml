@@ -1,0 +1,26 @@
+﻿
+@{
+    ViewBag.Title = "ViewTasks";
+}
+
+<h2>Vedeti taskurile</h2>
+
+@model ProiectLicenta.DTO.Tasks
+
+<div id="taskList">
+    @(Html.Kendo().Grid<ProiectLicenta.DTO.Tasks>()
+            .AutoBind(true)
+            .Name("aaa")
+            .Columns(col =>
+            {
+                col.Bound(c => c.Data_Creare_Task);
+                col.Bound(c => c.Data_Sfarsit_Task);
+                col.Bound(c => c.Descriere_Suplimentara);
+                col.Bound(c => c.Stare_Task);
+            })
+            .DataSource(dataSource => dataSource
+            .Ajax()
+            .Read(read => read.Action("GetTasks", "Tasks"))
+        )
+)
+</div>

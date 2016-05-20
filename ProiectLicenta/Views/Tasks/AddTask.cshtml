@@ -1,0 +1,135 @@
+﻿
+@{
+    ViewBag.Title = "AddTask";
+}
+
+<h2>AddTask</h2>
+
+
+@using (Html.BeginForm())
+{
+    <div>
+        <label> Tipul de task: &nbsp; </label>@(Html.Kendo().DropDownList()
+.Name("taskType")
+.AutoBind(true)
+.DataTextField("Denumire")//aici avem denumirea
+.DataValueField("Id")//aici avem id
+.DataSource(source =>
+{
+    source.Read(read =>
+    {
+        read.Action("GetTasksType", "Tasks");
+    });
+
+
+
+})
+        )
+    </div>
+
+    <br>
+
+    <div>
+        <label> Evenimentul<br /> pt care se asigneaza taskul: &nbsp; </label> @(Html.Kendo().DropDownList()
+        .Name("event")
+        .AutoBind(true)
+        .DataTextField("Denumire")//aici avem denumirea
+        .DataValueField("Id")//aici avem id
+        .DataSource(source =>
+        {
+            source.Read(read =>
+            {
+                read.Action("GetEvents", "Tasks");
+            });
+
+
+
+        })
+        )
+    </div>
+
+    <br>
+
+    <div><label>Descriere task</label>:<textarea id="description" placeholder="Oferiti cateva info. despre task" maxlength="500"> </textarea></div>
+
+    <br>
+    <div>
+        <label>Termen: </label> @(Html.Kendo().DatePicker()
+                .Name("dueDate")
+                .HtmlAttributes(new { style = "width:50%;" })
+                .Format("dd/MM/yyyy")
+        )
+    </div>
+    <br>
+    <div>
+        <label>Data creare</label> @(Html.Kendo().DatePicker()
+                .Name("creationDate")
+                .HtmlAttributes(new { style = "width:50%;" })
+                .Format("dd/MM/yyyy")
+        )
+    </div>
+    <br>
+
+    <div>
+        <label>Data sfarsit</label> @(Html.Kendo().DatePicker()
+                .Name("endDate")
+                .HtmlAttributes(new { style = "width:50%;" })
+                .Format("dd/MM/yyyy")
+        )
+    </div>
+}
+
+
+<br>
+
+
+<button class="btn btn-default" onclick="AddTask()">Creaza task</button> 
+
+<script type="text/javascript">
+
+    function AddTask() {
+
+        if ($("#creationDate").val() > $("#endDate").val()) {//comporatment determinist
+            alert("Eroare !\n Data de incepere a task-lui trenuie sa fie mai mica decat data de sfrsit");
+        }
+
+        else if ($("#description").val() == 0 || $("#dueDate").val() == 0 ||
+            $("#dueDate").val() == 0 || $("#endDate").val() == 0) {
+            alert("Va rugam sa completati toate campurile");
+        }
+
+        else
+            Send();
+    }
+
+    function Send() {
+
+        var tasks = JSON.stringify({
+
+            Id_Tip_Task: $("#taskType").val(),
+            Id_Eveniment: $("#event").val(),
+            Descriere_Suplimentara: $("#description").val(),
+            Termen: $("#dueDate").val(),
+            Data_Creare_Task: $("#creationDate").val(),
+            Data_Sfarsit_Task: $("#endDate").val()
+
+        });
+        debugger;
+        $.ajax({
+
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            url: '@Url.Action("AddTasks", "Tasks")',
+            type: "POST",
+            data: tasks
+        });
+    }
+</script>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+

@@ -1,0 +1,44 @@
+﻿
+@{
+    ViewBag.Title = "LogIn";
+}
+
+<h2>Log In</h2>
+
+@model ProiectLicenta.DTO.Users
+
+@using (Html.BeginForm("LogIn", "Users"))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(m => m.Nume_utilizator, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Nume_utilizator, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Nume_utilizator, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Parola, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.PasswordFor(m => m.Parola, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Parola, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="btn btn-default" value="Log In" />
+        </div>
+    </div>
+}
+
+<p>
+    @ViewBag.loginError 
+</p>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

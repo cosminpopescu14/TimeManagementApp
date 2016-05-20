@@ -1,0 +1,13 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<br>
+@Html.ActionLink("Creati eveniment", "CreateEvent", "Events", null, htmlAttributes: new { @class = "btn btn-primary" })<br>
+
+@Html.ActionLink("Actualizati evenimentul", "Update", "Events", null, htmlAttributes: new { @class = "btn btn-primary" })<br>
+
+@Html.ActionLink("Asignati echipa pt eveniment", "AssignTeam", "Events", null, htmlAttributes: new { @class = "btn btn-primary" })<br>
+
+@Html.ActionLink("Vedeti echipa evenimentului", "ViewTeam", "Events", null, new { @class = "btn btn-primary" })

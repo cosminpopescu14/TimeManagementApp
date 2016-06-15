@@ -1,0 +1,106 @@
+﻿
+@{
+    ViewBag.Title = "EditTask";
+}
+
+<h2>Editati task-urile</h2>
+
+@model ProiectLicenta.DTO.Tasks
+
+@(Html.Kendo().Grid<ProiectLicenta.DTO.Tasks>()
+    .AutoBind(true)
+    .Name("taskGrid")
+    .Columns(col =>
+    {
+        col.Bound(c => c.Id).Hidden(true);
+        col.Bound(c => c.Data_Creare_Task);
+        col.Bound(c => c.Data_Sfarsit_Task);
+        col.Bound(c => c.Descriere_Suplimentara);
+        col.Bound(c => c.Stare_Task);
+    })
+    .Selectable(s => s.Mode(GridSelectionMode.Multiple))
+    .Events(e => e.Change("GridSelected"))
+    .DataSource(dataSource => dataSource
+    .Ajax()
+    .Read(read => read.Action("GetTasks", "Tasks")))
+
+ )
+
+<script>
+    function GridSelected() {
+        var grid = $("#taskGrid").data("kendoGrid");
+        var selected = grid.dataItem(grid.select());
+
+        var taskId = selected.Id;
+        var Data_Creare_Task = selected.Data_Creare_Task;
+        var Data_Sfarsit_Task = selected.Data_Sfarsit_Task;
+        var Descriere_Suplimentara = selected.Descriere_Suplimentara;
+        var Stare_Task = selected.Stare_Task;
+        $("#myModal").modal('show');//arat fereastra modala
+
+        document.getElementById("taskId").value = taskId;
+        document.getElementById("taskDescription").value = Descriere_Suplimentara;;
+        $("#dataCreare").data("kendoDatePicker").value(Data_Creare_Task);
+        $("#dataSfarsit").data("kendoDatePicker").value(Data_Sfarsit_Task);
+    }
+</script>
+
+<div id="myModal" class="modal fade" aria-labelledby="myModalLabel" aria-hidden="true" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Editati evenimentul</h4>
+            </div>
+            <div class="modal-body" id="myModalBody">
+               Id: <p><input class="form-control" type="text" id="taskId" value="" readonly="readonly"></p>
+               Data creare task: <p id="1">
+                    @(Html.Kendo().DatePicker()
+                                    .Name("dataCreare")
+                                    .HtmlAttributes(new { style = "width: 100%" })
+                    )
+                </p>
+                Data sfarsit task: <p>
+                    @(Html.Kendo().DatePicker()
+                                        .Name("dataSfarsit")
+                                        .HtmlAttributes(new { style = "width: 100%" })
+                    )
+                </p>
+                
+                Descriere suplimentara:<p><input class="form-control" type="text" id="taskDescription" value=""></p>
+                Stare task:<p>
+                            <select id= "taskState">
+                                <option value="Efectuat">Efectuat</option>
+                                <option value="In asteptare">In asteptare</option>
+                                <option value="Nu m-am apucat">Nu m-am apucat</option>
+                                <option value="NU pot/nu am timp sa-l fac">Nu pot/nu am timp sa il efectuez</option>
+                            </select> 
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-success" onclick="SendUpdatedTasks()">Actualizeaza</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function SendUpdatedTasks() {
+
+        var fields = {
+            Id: $("#taskId").val(),
+            Data_Creare_Task: $("#dataCreare").val(),
+            Data_Sfarsit_Task: $("#dataSfarsit").val(),
+            Descriere_Suplimentara: $("#taskDescription").val(),
+            Stare_Task: $("#taskState").val()
+        }
+
+        alert(JSON.stringify(fields));
+        $.ajax({
+            contentType: "application/json; charset=utf-8",
+            url: "/Tasks/Edit",
+            type: "POST",
+            data: JSON.stringify(fields)
+        })
+    }
+</script>

@@ -12,5 +12,6 @@ namespace ProiectLicenta.DTO
         public string Denumire { get; set; }
         public string Nume_Utilizator { get; set; }
         public string Email { get; set; }
+        public string Rol { get; set; }
     }
 }

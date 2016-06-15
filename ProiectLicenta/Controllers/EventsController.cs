@@ -193,16 +193,19 @@ namespace ProiectLicenta.Controllers
 
         public ActionResult GetTeam([DataSourceRequest] DataSourceRequest request)
         {
-            var team = from eventId in pl.Echipa_Eveniment
+            var team = from eventId in pl.Echipa_Eveniment//retrn duplicate results
+                       //from roleId in pl.Functies
                            //from userId in pl.Echipa_Eveniment
                        join e in pl.Eveniments on eventId.Id_Eveniment equals e.Id
                        join u in pl.Utilizatoris on eventId.Id_Utilizator equals u.Id
+                       join r in pl.Functies on u.Id_Functie equals r.Id 
                        select new 
                        {
                            Id_Utilizator = u.Id,
                            Denumire = e.Denumire,
                            Nume_Utilizator = u.Nume_Utilizator,
-                           Email = u.Email
+                           Email = u.Email,
+                           Rol = r.Denumire
                        };
 
             DataSourceResult result = team.ToDataSourceResult(request);

@@ -6,14 +6,6 @@
 
 }
 
-@{ 
-    ViewBag.Address = "http://www.google.ro";
-}
-
-@{ 
-    ViewBag.tu = "eu sunt cosmin :)";
-}
-
 
 <h2>@ViewBag.Title</h2>
 
@@ -39,11 +31,9 @@
                 <div class="profile-usermenu">
                     <ul class="nav">
                         <li class="active">
-                            <a href="#">
-                                <i class="glyphicon glyphicon-home"></i>
-                                Overview
-                            </a>
+                             @Html.ActionLink("Overview", "Overview", "Profile", null, htmlAttributes: new { @class = "glyphicon glyphicon-home" }) 
                         </li>
+
                         <li>
                             @Html.ActionLink("Trimite mail", "Mail", "Profile",  null, htmlAttributes: new { @class = "glyphicon glyphicon-envelope" })
                         </li>

@@ -40,6 +40,21 @@ namespace ProiectLicenta.Controllers
             return View();
         }
 
+        [Authorize]
+        public ActionResult Overview()
+        {
+            var todayTask = from task in pl.Tasks
+                            select new
+                            {
+                                task.Eveniment,
+                                task.Stare_Task,
+                                task.Descriere_Suplimentara
+                            };
+
+            ViewBag.todayTasks = todayTask;
+            return View();
+        }
+       
         public ActionResult Mail()
         {
             return View();
@@ -72,8 +87,8 @@ namespace ProiectLicenta.Controllers
                 {
                     NetworkCredential credentials = new NetworkCredential
                     {
-                        UserName = "",
-                        Password = ""//niciodata aceasta informatie sa nu se afiseze in plain text
+                        UserName = "cosmin.popescu93@gmail.com",
+                        Password = "cosminpop"//niciodata aceasta informatie sa nu se afiseze in plain text
                     };
 
                     smtp.Credentials = credentials;

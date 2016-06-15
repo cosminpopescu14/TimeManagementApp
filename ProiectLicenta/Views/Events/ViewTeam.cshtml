@@ -17,6 +17,7 @@
                 col.Bound(c => c.Denumire);
                 col.Bound(c => c.Nume_Utilizator);
                 col.Bound(c => c.Email);
+                col.Bound(c => c.Rol);
             })
             .Selectable(s => s.Mode(GridSelectionMode.Multiple))
             .Events(e => e.Change("GridSelected"))

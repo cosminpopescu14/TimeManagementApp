@@ -34,6 +34,11 @@ namespace ProiectLicenta.Controllers
             return View();
         }
 
+        [Authorize]
+        public ActionResult EditTask()
+        {
+            return View();
+        }
         //[Authorize]
         //public ActionResult TaskAdded()
         //{
@@ -107,6 +112,7 @@ namespace ProiectLicenta.Controllers
             var tasks = from t in pl.Tasks
                         select new
                         {
+                            t.Id,
                             t.Data_Creare_Task,
                             t.Data_Sfarsit_Task,
                             t.Descriere_Suplimentara,
@@ -116,5 +122,36 @@ namespace ProiectLicenta.Controllers
             DataSourceResult result = tasks.ToDataSourceResult(request);
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+
+        public ActionResult Edit([DataSourceRequest] DataSourceRequest request, Tasks task)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var taskEntity = pl.Tasks.FirstOrDefault(t => t.Id == task.Id);
+                    taskEntity.Data_Creare_Task = task.Data_Creare_Task;
+                    taskEntity.Data_Sfarsit_Task = task.Data_Sfarsit_Task;
+                    taskEntity.Descriere_Suplimentara = task.Descriere_Suplimentara;
+                    taskEntity.Stare_Task = task.Stare_Task;
+                    pl.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+
+            else
+            {
+                var message = string.Join(" | ", ModelState.Values
+                    .SelectMany(v => v.Errors)
+                    .Select(e => e.ErrorMessage));
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, message);
+            }
+            return RedirectToAction("EditTask");
+        }
     }
 }
+
+//coded with love by Cosmin Popescu

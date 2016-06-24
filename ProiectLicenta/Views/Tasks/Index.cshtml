@@ -8,15 +8,21 @@
 }
 <h2>Index</h2>
 
+
 @{
     if (ViewBag.userName == "Cosmin Popescu")
     {
-        @Html.ActionLink("Creati task-uri", "AddTask", "Tasks", null, htmlAttributes: new { @class = "btn btn-primary" })<br>
+        @Html.ActionLink("Creati task-uri", "AddTask", "Tasks", null, htmlAttributes: new { @class = "btn btn-primary" })
+
+        @Html.ActionLink("Vedeti task-urile", "ViewTasks", "Tasks", null, htmlAttributes: new { @class = "btn btn-primary" })
+
+        @Html.ActionLink("Editati task-urile task-urile", "EditTask", "Tasks", null, htmlAttributes: new { @class = "btn btn-primary" })
     }
 }
 
-@Html.ActionLink("Vedeti task-urile", "ViewTasks", "Tasks", null, htmlAttributes: new { @class = "btn btn-primary" })<br>
+@Html.ActionLink("Vedeti task-urile dumneavoastra", "ViewByMember", "Tasks", null, htmlAttributes: new { @class = "btn btn-primary" })
 
-@Html.ActionLink("Editati task-urile task-urile", "EditTask", "Tasks", null, htmlAttributes: new { @class = "btn btn-primary" })<br>
+
+
 
 

@@ -78,6 +78,11 @@ C:\Users\Cosmin\Documents\Visual Studio 2015\Projects\ProiectLicenta\ProiectLice
 C:\Users\Cosmin\Documents\Visual Studio 2015\Projects\ProiectLicenta\ProiectLicenta\bin\tr-TR\Kendo.Mvc.resources.dll
 C:\Users\Cosmin\Documents\Visual Studio 2015\Projects\ProiectLicenta\ProiectLicenta\bin\uk-UA\Kendo.Mvc.resources.dll
 C:\Users\Cosmin\Documents\Visual Studio 2015\Projects\ProiectLicenta\ProiectLicenta\bin\zh-CN\Kendo.Mvc.resources.dll
-C:\Users\Cosmin\Documents\Visual Studio 2015\Projects\ProiectLicenta\ProiectLicenta\obj\Debug\ProiectLicenta.csprojResolveAssemblyReference.cache
+C:\Users\Cosmin\Documents\Visual Studio 2015\Projects\ProiectLicenta\ProiectLicenta\obj\Debug\ProiectLicenta.Migrations.TasksXUser.resources
+C:\Users\Cosmin\Documents\Visual Studio 2015\Projects\ProiectLicenta\ProiectLicenta\obj\Debug\ProiectLicenta.csproj.GenerateResource.Cache
 C:\Users\Cosmin\Documents\Visual Studio 2015\Projects\ProiectLicenta\ProiectLicenta\obj\Debug\ProiectLicenta.dll
 C:\Users\Cosmin\Documents\Visual Studio 2015\Projects\ProiectLicenta\ProiectLicenta\obj\Debug\ProiectLicenta.pdb
+C:\Users\Cosmin\Documents\Visual Studio 2015\Projects\ProiectLicenta\ProiectLicenta\obj\Debug\ProiectLicenta.csprojResolveAssemblyReference.cache
+C:\Users\Cosmin\Documents\Visual Studio 2015\Projects\ProiectLicenta\ProiectLicenta\obj\Debug\ProiectLicenta.Migrations.TaskXUser.resources
+C:\Users\Cosmin\Documents\Visual Studio 2015\Projects\ProiectLicenta\ProiectLicenta\obj\Debug\ProiectLicenta.Migrations.TasksXUsers.resources
+C:\Users\Cosmin\Documents\Visual Studio 2015\Projects\ProiectLicenta\ProiectLicenta\obj\Debug\ProiectLicenta.Migrations.Tasks_Users.resources

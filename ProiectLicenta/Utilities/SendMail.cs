@@ -26,8 +26,8 @@ namespace ProiectLicenta.Utilities
             {
                 NetworkCredential credentials = new NetworkCredential
                 {
-                    UserName = "",
-                    Password = ""
+                    UserName = "cosmin.popescu93@gmail.com",
+                    Password = "cosminpop"
                 };
 
                 smtp.Credentials = credentials;

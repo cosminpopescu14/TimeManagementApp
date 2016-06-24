@@ -30,6 +30,19 @@
     <br>
 
     <div>
+        @(
+        Html.Kendo().MultiSelect()
+        .Name("usersForTeam")
+        .Placeholder("Selectati oamenii care vor face parte din echpa de organizare.")
+        .DataTextField("Nume_Utilizator")
+        .DataValueField("Id")
+        .DataSource(source => { source.Read(read => read.Action("Test", "Tasks")); }
+
+ )
+        )
+    </div>
+
+    <div>
         <label> Evenimentul<br /> pt care se asigneaza taskul: &nbsp; </label> @(Html.Kendo().DropDownList()
         .Name("event")
         .AutoBind(true)
@@ -89,7 +102,7 @@
 
     function AddTask() {
 
-        if ($("#creationDate").val() > $("#endDate").val()) {//comporatment determinist
+        if ($("#creationDate").val() < $("#endDate").val()) {//comporatment determinist
             alert("Eroare !\n Data de incepere a task-lui trenuie sa fie mai mica decat data de sfrsit");
         }
 
@@ -114,7 +127,7 @@
             Data_Sfarsit_Task: $("#endDate").val()
 
         });
-        debugger;
+
         $.ajax({
 
             contentType: "application/json; charset=utf-8",
@@ -126,10 +139,6 @@
     }
 </script>
 
-
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
-
-
-

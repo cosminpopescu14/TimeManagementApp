@@ -153,13 +153,32 @@
     <Compile Include="DTO\EventXTeam.cs" />
     <Compile Include="DTO\SchedulerTask.cs" />
     <Compile Include="DTO\Tasks.cs" />
+    <Compile Include="DTO\TaskXUser.cs" />
     <Compile Include="DTO\Users.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201606170701026_TasksXUser.cs" />
+    <Compile Include="Migrations\201606170701026_TasksXUser.Designer.cs">
+      <DependentUpon>201606170701026_TasksXUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201606231458528_TaskXUser.cs" />
+    <Compile Include="Migrations\201606231458528_TaskXUser.Designer.cs">
+      <DependentUpon>201606231458528_TaskXUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201606231503109_TasksXUsers.cs" />
+    <Compile Include="Migrations\201606231503109_TasksXUsers.Designer.cs">
+      <DependentUpon>201606231503109_TasksXUsers.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201606231551258_Tasks_Users.cs" />
+    <Compile Include="Migrations\201606231551258_Tasks_Users.Designer.cs">
+      <DependentUpon>201606231551258_Tasks_Users.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Echipa_Eveniment.cs" />
     <Compile Include="Models\Eveniment.cs" />
     <Compile Include="Models\Functie.cs" />
+    <Compile Include="Models\MembruEchipaXTask.cs" />
     <Compile Include="Models\ProiectLicenta.cs" />
     <Compile Include="Models\sysdiagram.cs" />
     <Compile Include="Models\Task.cs" />
@@ -612,7 +631,6 @@
     <Content Include="Content\kendo\2016.1.226\images\kendoui.woff" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="ClassDiagram1.cd" />
     <None Include="Scripts\jquery-2.2.3.intellisense.js" />
     <None Include="Scripts\jquery-2.1.0-vsdoc.js" />
     <Content Include="Scripts\jquery-2.2.3.js" />
@@ -936,6 +954,7 @@
     <Content Include="Views\Tasks\TaskAdded.cshtml" />
     <Content Include="Views\Profile\Overview.cshtml" />
     <Content Include="Views\Tasks\EditTask.cshtml" />
+    <Content Include="Views\Tasks\ViewByMember.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Site.css" />
@@ -944,6 +963,20 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Images\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201606170701026_TasksXUser.resx">
+      <DependentUpon>201606170701026_TasksXUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201606231458528_TaskXUser.resx">
+      <DependentUpon>201606231458528_TaskXUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201606231503109_TasksXUsers.resx">
+      <DependentUpon>201606231503109_TasksXUsers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201606231551258_Tasks_Users.resx">
+      <DependentUpon>201606231551258_Tasks_Users.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

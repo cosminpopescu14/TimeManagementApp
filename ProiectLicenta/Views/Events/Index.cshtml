@@ -4,10 +4,55 @@
 }
 
 <br>
-@Html.ActionLink("Creati eveniment", "CreateEvent", "Events", null, htmlAttributes: new { @class = "btn btn-primary" })<br>
+<div id="menu">
 
-@Html.ActionLink("Actualizati evenimentul", "Update", "Events", null, htmlAttributes: new { @class = "btn btn-primary" })<br>
+@Html.ActionLink("Creati eveniment", "CreateEvent", "Events", null, htmlAttributes: new { @class = "btn btn-primary", @id= "but1"}) <br>
+<br>
+@Html.ActionLink("Actualizati evenimentul", "Update", "Events", null, htmlAttributes: new { @class = "btn btn-primary", @id = "but2" }) <br>
+<br>
+@Html.ActionLink("Asignati echipa pt eveniment", "AssignTeam", "Events", null, htmlAttributes: new { @class = "btn btn-primary", @id = "but3" }) &nbsp;
 
-@Html.ActionLink("Asignati echipa pt eveniment", "AssignTeam", "Events", null, htmlAttributes: new { @class = "btn btn-primary" })<br>
+@Html.ActionLink("Vedeti echipa evenimentului", "ViewTeam", "Events", null, new { @class = "btn btn-primary", @id = "but4" }) &nbsp;
+</div>
 
-@Html.ActionLink("Vedeti echipa evenimentului", "ViewTeam", "Events", null, new { @class = "btn btn-primary" })
+<style>
+#but1 {
+   border: 1px outset #2196f3;
+   background-color: #2196f3;
+   height:200px;
+   width:200px;
+   text-align: center;
+   line-height: 160px;
+}
+
+#but2 {
+   border: 1px outset #2196f3;
+   background-color: #2196f3;
+   height:200px;
+   width:200px;
+   text-align: center;
+   line-height: 160px;
+}
+
+#but3 {
+   border: 1px outset #2196f3;
+   background-color: #2196f3;
+   height:200px;
+   width:200px;
+   text-align: center;
+   line-height: 160px;
+}
+
+#but4 {
+   border: 1px outset #2196f3;
+   background-color: #2196f3;
+   height:200px;
+   width:200px;
+   text-align: center;
+   line-height: 160px;
+}
+
+#menu{
+    margin-top: 50px;
+}
+</style>

@@ -4,7 +4,7 @@ namespace ProiectLicenta.Models
     using System.Data.Entity;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
-
+    using System.Data.Entity.ModelConfiguration.Conventions;
     public partial class ProiectLicenta : DbContext
     {
         public ProiectLicenta()
@@ -20,6 +20,7 @@ namespace ProiectLicenta.Models
         public virtual DbSet<Task> Tasks { get; set; }
         public virtual DbSet<Tip_Task> Tip_Task { get; set; }
         public virtual DbSet<Utilizatori> Utilizatoris { get; set; }
+        public virtual DbSet<MembruEchipaXTask> MembruEchipaXTask { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -50,6 +51,16 @@ namespace ProiectLicenta.Models
                 .HasMany(e => e.Utilizatoris)
                 .WithOptional(e => e.Functie)
                 .HasForeignKey(e => e.Id_Functie);
+
+            modelBuilder.Entity<Task>()
+                .HasMany(t => t.Utilizatoris)
+                .WithMany(t => t.Tasks)
+                .Map(m =>
+                {
+                    m.ToTable("MembruEchipaXTask");
+                    m.MapLeftKey("Id_Task");
+                    m.MapRightKey("Id_Utilizator");
+                });
 
             modelBuilder.Entity<Task>()
                 .Property(e => e.Descriere_Suplimentara)

@@ -1,0 +1,24 @@
+﻿
+@{
+    ViewBag.Title = "ViewByMember";
+}
+
+<h2>Vizualizati task-urile dumneavoastra</h2>
+
+@(Html.Kendo().Grid<ProiectLicenta.DTO.TaskXUser>()
+            .AutoBind(true)
+            .Name("grid")
+            .Columns(col =>
+            {
+                col.Bound(c => c.Descriere_Suplimentara);
+                col.Bound(c => c.Data_Creare_Task);
+                col.Bound(c => c.Data_Sfarsit_Task);
+            })
+            .DataSource(dataSource => dataSource
+            .Ajax()
+            .Read(read => read.Action("GetTasksByTeamMember", "Tasks"))
+        )
+)
+
+
+

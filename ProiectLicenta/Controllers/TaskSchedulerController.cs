@@ -59,9 +59,9 @@ namespace ProiectLicenta.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult ShowTasksByRole()
+        /*public ActionResult ShowTasksByRole()
         {
             return null;
-        }
+        }*/
     }
 }

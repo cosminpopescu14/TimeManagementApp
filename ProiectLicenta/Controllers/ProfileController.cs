@@ -123,7 +123,7 @@ namespace ProiectLicenta.Controllers
         }
 
         [HttpPost]
-        public ActionResult UpdateUserDetails(Users usr)//actualizare detalii. momentan nu functioneaza cum ar trebui. 28/04/2016 merge
+        public ActionResult UpdateUserDetails(Users usr)//actualizare detalii. 
         {
             if (ModelState.IsValid)
             {

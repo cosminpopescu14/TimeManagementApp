@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using Kendo.Mvc.UI;
 using Kendo.Mvc.Extensions;
+using System.Data.Entity;
 
 using ProiectLicenta.DTO;
 using ProiectLicenta.Models;
@@ -19,6 +20,16 @@ namespace ProiectLicenta.Controllers
         [Authorize]
         public ActionResult Index()
         {
+            var x = from task in pl.Tasks
+                    join t in pl.MembruEchipaXTask on task.Id equals t.Id_Task
+                    join u in pl.Utilizatoris on t.Id_Utilizator equals u.Id
+                    select new
+                    {
+                        u.Nume_Utilizator,
+                        task.Descriere_Suplimentara
+                    };
+
+            ViewBag.tasks = x;
             return View();
         }
 
@@ -39,11 +50,12 @@ namespace ProiectLicenta.Controllers
         {
             return View();
         }
-        //[Authorize]
-        //public ActionResult TaskAdded()
-        //{
-        //    return View();
-        //}
+
+        [Authorize]
+        public ActionResult ViewByMember()
+        {
+           return View();
+        }
 
         [Authorize]
         public ActionResult GetTasksType([DataSourceRequest] DataSourceRequest request)
@@ -74,13 +86,33 @@ namespace ProiectLicenta.Controllers
                         Data_Creare_Task = task.Data_Creare_Task,
                         Data_Sfarsit_Task = task.Data_Sfarsit_Task,
                     };
-                        pl.Tasks.Add(tasks);
-                        pl.SaveChanges();
+
+                    IQueryable<int> taskId = from t in pl.Tasks
+                                 select new
+                                 {
+                                    t.Id
+                                 }.Id;
+
+                    IQueryable<int> userId = from u in pl.Utilizatoris
+                                 join ee in pl.Echipa_Eveniment on u.Id equals ee.Id_Utilizator
+                                 select new
+                                 {
+                                     u.Id
+                                 }.Id;
+
+                    var x = new MembruEchipaXTask
+                    {
+                        Id_Task = Convert.ToInt32(taskId),
+                        Id_Utilizator = Convert.ToInt32(userId)
+                    };
+
+                    pl.Tasks.Add(tasks);
+                    pl.MembruEchipaXTask.Add(x);
+                    pl.SaveChanges();
                 }
 
-                catch (Exception ex)
+                catch (Exception ex)//sare aici, nu executa insert. exceptie datorata unui nume gresit de tabel. entityt foloseste varianta la plural a numelui
                 {
-
                     throw ex;
                 }
             }
@@ -95,6 +127,18 @@ namespace ProiectLicenta.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult Test([DataSourceRequest] DataSourceRequest request)
+        {
+            var user = from u in pl.Utilizatoris
+                       join ee in pl.Echipa_Eveniment on u.Id equals ee.Id_Utilizator
+                       select new
+                       {
+                           Id = u.Id,
+                           Nume_Utilizator = u.Nume_Utilizator
+                       };
+
+            return Json(user, JsonRequestBehavior.AllowGet);
+        }
         public ActionResult GetEvents([DataSourceRequest] DataSourceRequest request)
         {
             var events = from ev in pl.Eveniments
@@ -121,6 +165,24 @@ namespace ProiectLicenta.Controllers
 
             DataSourceResult result = tasks.ToDataSourceResult(request);
             return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult GetTasksByTeamMember([DataSourceRequest] DataSourceRequest request)
+        {
+            var x = from task in pl.Tasks
+                    join t in pl.MembruEchipaXTask on task.Id equals t.Id_Task
+                    join u in pl.Utilizatoris on t.Id_Utilizator equals u.Id
+                    where u.Nume_Utilizator == User.Identity.Name
+                    select new
+                    {
+                        u.Nume_Utilizator,
+                        task.Descriere_Suplimentara,
+                        task.Data_Creare_Task,
+                        task.Data_Sfarsit_Task
+                    };
+
+            DataSourceResult results = x.ToDataSourceResult(request);
+            return Json(results, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult Edit([DataSourceRequest] DataSourceRequest request, Tasks task)

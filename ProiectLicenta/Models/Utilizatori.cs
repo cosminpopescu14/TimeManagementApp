@@ -32,5 +32,8 @@ namespace ProiectLicenta.Models
         public virtual ICollection<Echipa_Eveniment> Echipa_Eveniment { get; set; }
 
         public virtual Functie Functie { get; set; }
+
+        public virtual ICollection<Task> Tasks { get; set; }//poate nu este bun
+
     }
 }

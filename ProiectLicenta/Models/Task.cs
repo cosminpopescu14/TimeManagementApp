@@ -30,5 +30,7 @@ namespace ProiectLicenta.Models
         public virtual Eveniment Eveniment { get; set; }
 
         public virtual Tip_Task Tip_Task { get; set; }
+
+        public virtual ICollection<Utilizatori> Utilizatoris { get; set; }//poate nu este bun. Avem o colectie de sarcini
     }
 }

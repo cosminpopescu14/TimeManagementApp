@@ -10,6 +10,8 @@ namespace ProiectLicenta.DTO
     {
         public int Id { get; set; }
 
+        public string Nume_Utilizator { get; set; }
+
         [Required]
         public int Id_Tip_Task { get; set; }
 

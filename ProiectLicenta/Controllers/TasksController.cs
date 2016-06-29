@@ -154,9 +154,13 @@ namespace ProiectLicenta.Controllers
         public ActionResult GetTasks([DataSourceRequest] DataSourceRequest request)
         {
             var tasks = from t in pl.Tasks
+                        join met in pl.MembruEchipaXTask on t.Id equals met.Id_Task
+                        join u in pl.Utilizatoris on met.Id_Utilizator equals u.Id
+
                         select new
                         {
                             t.Id,
+                            u.Nume_Utilizator,
                             t.Data_Creare_Task,
                             t.Data_Sfarsit_Task,
                             t.Descriere_Suplimentara,

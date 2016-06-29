@@ -59,15 +59,26 @@ namespace ProiectLicenta.Controllers
             {
                 try
                 {
-                    string CallSP = "AdaugareEveniment @Denumire, @Data_Start, @Data_Sfarsit, @Activ, @Id_MO";
+                    /*string CallSP = "AdaugareEveniment @Denumire, @Data_Start, @Data_Sfarsit, @Activ, @Id_MO";
                     SqlParameter Denumire = new SqlParameter("Denumire", ev.Denumire);
                     SqlParameter DataStart = new SqlParameter("Data_Start", ev.Data_Start);
                     SqlParameter DataSfarsit = new SqlParameter("Data_Sfarsit", ev.Data_Sfarsit);
                     SqlParameter Activ = new SqlParameter("Activ", ev.Activ);
-                    SqlParameter Id_MO = new SqlParameter("Id_MO", 1);//id-ul mo-ului este hardcodat. NU ESTE CORECT ACEST LUCRU. VA TREBUI MODIFICAT
+                    SqlParameter Id_MO = new SqlParameter("Id_MO", 2);//id-ul mo-ului este hardcodat. NU ESTE CORECT ACEST LUCRU. VA TREBUI MODIFICAT
 
                     object[] parameters = new object[] { Denumire, DataStart, DataSfarsit, Activ, Id_MO };
-                    var result = pl.Database.SqlQuery<Events>(CallSP, parameters);
+                    var result = pl.Database.SqlQuery<Events>(CallSP, parameters);*/
+                    var evt = new Eveniment
+                    {
+                        Denumire = ev.Denumire,
+                        Data_Start = ev.Data_Start,
+                        Data_Sfarsit = ev.Data_Sfarsit,
+                        Activ = false,
+                        Id_MO = 2
+                    };
+
+                    pl.Eveniments.Add(evt);
+                    pl.SaveChanges();
 
                     return RedirectToAction("Index");
                 }

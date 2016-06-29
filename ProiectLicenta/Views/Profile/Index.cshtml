@@ -43,7 +43,7 @@
                         </li>
 
                         <li>
-                            @if (HttpContext.Current.User.Identity.Name == "Cosmin Popescu")
+                            @if ((HttpContext.Current.User.Identity.Name == "Cosmin Popescu") || (HttpContext.Current.User.Identity.Name == "CosminPopescu"))
                             {
                                 @Html.ActionLink("Evenimente", "Index", "Events", null, htmlAttributes: new { @class = "glyphicon glyphicon-calendar" })
                             }

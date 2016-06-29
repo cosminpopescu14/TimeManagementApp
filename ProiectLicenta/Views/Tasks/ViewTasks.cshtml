@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "ViewTasks";
+    ViewBag.Title = "Vedeti task-urile";
 }
 
 <h2>Vedeti taskurile</h2>
@@ -10,13 +10,14 @@
 <div id="taskList">
     @(Html.Kendo().Grid<ProiectLicenta.DTO.Tasks>()
             .AutoBind(true)
-            .Name("aaa")
+            .Name("taskGrid")
             .Columns(col =>
             {
                 col.Bound(c => c.Data_Creare_Task);
                 col.Bound(c => c.Data_Sfarsit_Task);
                 col.Bound(c => c.Descriere_Suplimentara);
                 col.Bound(c => c.Stare_Task);
+                col.Bound(c => c.Nume_Utilizator);
             })
             .DataSource(dataSource => dataSource
             .Ajax()

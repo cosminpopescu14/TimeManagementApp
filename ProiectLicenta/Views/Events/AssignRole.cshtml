@@ -1,11 +1,16 @@
 ﻿
 @{
+    ViewBag.Title = "AssignRole";
+}
+
+<h2>Asignati roluri</h2>
+
+@{
     ViewBag.Title = "ViewTeam";
 }
 @model ProiectLicenta.DTO.EventXTeam
 
 
-<h2>Vizualiati echipa de organizare a evenimentului</h2>
 
 <div id="teamGrid">
     @(Html.Kendo().Grid<ProiectLicenta.DTO.EventXTeam>()
@@ -23,7 +28,7 @@
             .Events(e => e.Change("GridSelected"))
             .DataSource(dataSource => dataSource
             .Ajax()
-            .Read(read => read.Action("GetTeamWithRoles", "Events"))
+            .Read(read => read.Action("GetTeam", "Events"))
         )
     )
 
@@ -37,7 +42,7 @@
         var Id = selected.Id_Utilizator;
         var usrName = selected.Nume_Utilizator;
         $("#myModal").modal('show');//arat fereastra modala
-       
+
         document.getElementById("usrId").value = Id;
         document.getElementById("usrName").value = usrName;
     }
@@ -68,8 +73,8 @@
                                         read.Action("SelectRoles", "Users");
                                     });
                                 })
-                )
-            </p>
+                    )
+                </p>
 
             </div>
             <div class="modal-footer">
@@ -98,7 +103,4 @@ function SendDetails() {
 
     }
 </script>
-
-
-
 

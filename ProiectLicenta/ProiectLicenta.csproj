@@ -956,6 +956,8 @@
     <Content Include="Views\Profile\Overview.cshtml" />
     <Content Include="Views\Tasks\EditTask.cshtml" />
     <Content Include="Views\Tasks\ViewByMember.cshtml" />
+    <Content Include="Views\Tasks\EditTaskStatus.cshtml" />
+    <Content Include="Views\Events\AssignRole.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Site.css" />

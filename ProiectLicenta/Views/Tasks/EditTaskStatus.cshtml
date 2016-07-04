@@ -1,9 +1,9 @@
 ﻿
 @{
-    ViewBag.Title = "EditTask";
+    ViewBag.Title = "EditTaskStatus";
 }
 
-<h2>Editati task-urile</h2>
+<h2>EditTaskStatus</h2>
 
 @model ProiectLicenta.DTO.Tasks
 
@@ -22,9 +22,9 @@
     .Events(e => e.Change("GridSelected"))
     .DataSource(dataSource => dataSource
     .Ajax()
-    .Read(read => read.Action("GetTasks", "Tasks")))
+    .Read(read => read.Action("GetTasksByTeamMember", "Tasks")))
 
- )
+)
 
 <script>
     function GridSelected() {
@@ -50,14 +50,15 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title">Editati evenimentul</h4>
+                <h4 class="modal-title">Editati statutul task-ului</h4>
             </div>
             <div class="modal-body" id="myModalBody">
-               Id: <p><input class="form-control" type="text" id="taskId" value="" readonly="readonly"></p>
-               Data creare task: <p id="1">
+                Id: <p><input class="form-control" type="text" id="taskId" value="" readonly="readonly"></p>
+                Data creare task: <p id="1" >
                     @(Html.Kendo().DatePicker()
                                     .Name("dataCreare")
                                     .HtmlAttributes(new { style = "width: 100%" })
+                                    
                     )
                 </p>
                 Data sfarsit task: <p>
@@ -66,15 +67,15 @@
                                         .HtmlAttributes(new { style = "width: 100%" })
                     )
                 </p>
-                
+
                 Descriere suplimentara:<p><input class="form-control" type="text" id="taskDescription" value=""></p>
                 Stare task:<p>
-                            <select id= "taskState">
-                                <option value="Efectuat">Efectuat</option>
-                                <option value="In asteptare">In asteptare</option>
-                                <option value="Nu m-am apucat">Nu m-am apucat</option>
-                                <option value="Nu pot/nu am timp sa-l fac">Nu pot/nu am timp sa il efectuez</option>
-                            </select> 
+                    <select id="taskState">
+                        <option value="Efectuat">Efectuat</option>
+                        <option value="In asteptare">In asteptare</option>
+                        <option value="Nu m-am apucat">Nu m-am apucat</option>
+                        <option value="Nu pot/nu am timp sa-l fac">Nu pot/nu am timp sa il efectuez</option>
+                    </select>
                 </p>
             </div>
             <div class="modal-footer">
@@ -83,7 +84,10 @@
         </div>
     </div>
 </div>
-
+<script>
+    $("#dataCreare").attr("readonly", true);
+    $("#dataSfarsit").attr("readonly", true);
+</script>
 <script>
     function SendUpdatedTasks() {
 

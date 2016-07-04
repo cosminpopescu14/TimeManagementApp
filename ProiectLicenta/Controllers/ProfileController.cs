@@ -31,6 +31,8 @@ namespace ProiectLicenta.Controllers
             var userRole = from roleId in pl.Utilizatoris
                            where roleId.Nume_Utilizator == User.Identity.Name
                            join x in pl.Functies on roleId.Id_Functie equals x.Id
+                           
+
                            select new
                            {
                                x.Denumire
@@ -88,7 +90,7 @@ namespace ProiectLicenta.Controllers
                     NetworkCredential credentials = new NetworkCredential
                     {
                         UserName = "cosmin.popescu93@gmail.com",
-                        Password = ""//niciodata aceasta informatie sa nu se afiseze in plain text
+                        Password = "cosminpop"//niciodata aceasta informatie sa nu se afiseze in plain text
                     };
 
                     smtp.Credentials = credentials;

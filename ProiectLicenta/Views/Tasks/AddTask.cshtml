@@ -102,7 +102,7 @@
 
     function AddTask() {
 
-        if ($("#creationDate").val() < $("#endDate").val()) {//comporatment determinist
+        if ($("#creationDate").val() > $("#endDate").val()) {//comporatment determinist
             alert("Eroare !\n Data de incepere a task-lui trenuie sa fie mai mica decat data de sfrsit");
         }
 
@@ -138,6 +138,8 @@
         });
     }
 </script>
+
+@ViewBag.err
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

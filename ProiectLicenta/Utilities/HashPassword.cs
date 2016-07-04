@@ -10,7 +10,7 @@ namespace ProiectLicenta.Utilities
 {
     public class HashPassword
     {
-        public static string ComputeSHA1(string password)
+        public static string ComputeSHA1(string password)//sha1(password)
         {
             byte[] rawData = Encoding.ASCII.GetBytes(password);//converim parola intr-un sir de bytes
             byte[] hashedPassword = null;//aici stocam rezultatul functiei SHA1

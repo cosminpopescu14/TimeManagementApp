@@ -51,6 +51,11 @@ namespace ProiectLicenta.Controllers
             return View();
         }
         
+        //[Authorize]
+        public ActionResult AssignRole()
+        {
+            return View();
+        }
 
         [HttpPost]
         public ActionResult AddEvents([DataSourceRequest] DataSourceRequest request, Events ev)//adaugare in tabela eveniment
@@ -59,15 +64,6 @@ namespace ProiectLicenta.Controllers
             {
                 try
                 {
-                    /*string CallSP = "AdaugareEveniment @Denumire, @Data_Start, @Data_Sfarsit, @Activ, @Id_MO";
-                    SqlParameter Denumire = new SqlParameter("Denumire", ev.Denumire);
-                    SqlParameter DataStart = new SqlParameter("Data_Start", ev.Data_Start);
-                    SqlParameter DataSfarsit = new SqlParameter("Data_Sfarsit", ev.Data_Sfarsit);
-                    SqlParameter Activ = new SqlParameter("Activ", ev.Activ);
-                    SqlParameter Id_MO = new SqlParameter("Id_MO", 2);//id-ul mo-ului este hardcodat. NU ESTE CORECT ACEST LUCRU. VA TREBUI MODIFICAT
-
-                    object[] parameters = new object[] { Denumire, DataStart, DataSfarsit, Activ, Id_MO };
-                    var result = pl.Database.SqlQuery<Events>(CallSP, parameters);*/
                     var evt = new Eveniment
                     {
                         Denumire = ev.Denumire,
@@ -140,6 +136,10 @@ namespace ProiectLicenta.Controllers
         public ActionResult GetEvents([DataSourceRequest] DataSourceRequest request)
         {
             var events = from ev in pl.Eveniments
+                         join ee in pl.Echipa_Eveniment on ev.Id_MO equals ee.Id_Utilizator
+                         join u in pl.Utilizatoris on ee.Id_Utilizator equals u.Id
+                         where u.Nume_Utilizator == User.Identity.Name
+        
                          select new
                          {
                              Id = ev.Id,
@@ -147,6 +147,8 @@ namespace ProiectLicenta.Controllers
                              Data_Start = ev.Data_Start,
                              Data_Sfarsit = ev.Data_Sfarsit
                          };
+                         
+
 
             DataSourceResult result = events.ToDataSourceResult(request);
             return Json(result, JsonRequestBehavior.AllowGet);
@@ -202,15 +204,41 @@ namespace ProiectLicenta.Controllers
             return RedirectToAction("AssignTeam");
         }
 
+        public int UserLogged()
+        {
+            int id = (User.Identity.Name == "Cosmin Popescu") ? 1 : 2; //solutie temporara
+            return id;      
+        }
+
         public ActionResult GetTeam([DataSourceRequest] DataSourceRequest request)
         {
-            var team = from eventId in pl.Echipa_Eveniment//retrn duplicate results
-                       //from roleId in pl.Functies
-                           //from userId in pl.Echipa_Eveniment
+            int userIdLogged = UserLogged();
+            var team = from eventId in pl.Echipa_Eveniment
                        join e in pl.Eveniments on eventId.Id_Eveniment equals e.Id
                        join u in pl.Utilizatoris on eventId.Id_Utilizator equals u.Id
-                       join r in pl.Functies on u.Id_Functie equals r.Id 
-                       select new 
+                       where eventId.Id_Eveniment == userIdLogged
+            select new 
+                       {
+                           Id_Utilizator = u.Id,
+                           Denumire = e.Denumire,
+                           Nume_Utilizator = u.Nume_Utilizator,
+                           Email = u.Email
+                    
+                       };
+
+            DataSourceResult result = team.ToDataSourceResult(request);
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult GetTeamWithRoles([DataSourceRequest] DataSourceRequest request)
+        {
+            int userIdLogged = UserLogged();
+            var team = from eventId in pl.Echipa_Eveniment
+                       join e in pl.Eveniments on eventId.Id_Eveniment equals e.Id
+                       join u in pl.Utilizatoris on eventId.Id_Utilizator equals u.Id
+                       join r in pl.Functies on u.Id_Functie equals r.Id
+                       where eventId.Id_Eveniment == userIdLogged
+                       select new
                        {
                            Id_Utilizator = u.Id,
                            Denumire = e.Denumire,

@@ -12,7 +12,11 @@
 <br>
 @Html.ActionLink("Asignati echipa pt eveniment", "AssignTeam", "Events", null, htmlAttributes: new { @class = "btn btn-primary", @id = "but3" }) &nbsp;
 
-@Html.ActionLink("Vedeti echipa evenimentului", "ViewTeam", "Events", null, new { @class = "btn btn-primary", @id = "but4" }) &nbsp;
+@Html.ActionLink("Asignati roluri", "AssignRole", "Events", null, new { @class = "btn btn-primary", @id = "but4" }) &nbsp;
+
+@Html.ActionLink("Vedeti echipa evenimentului", "ViewTeam", "Events", null, new { @class = "btn btn-primary", @id = "but5" }) &nbsp;
+
+
 </div>
 
 <style>
@@ -44,6 +48,15 @@
 }
 
 #but4 {
+   border: 1px outset #2196f3;
+   background-color: #2196f3;
+   height:200px;
+   width:200px;
+   text-align: center;
+   line-height: 160px;
+}
+
+#but5 {
    border: 1px outset #2196f3;
    background-color: #2196f3;
    height:200px;

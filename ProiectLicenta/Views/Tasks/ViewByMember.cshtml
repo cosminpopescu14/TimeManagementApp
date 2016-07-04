@@ -14,9 +14,11 @@
                 col.Bound(c => c.Data_Creare_Task);
                 col.Bound(c => c.Data_Sfarsit_Task);
             })
+            .Selectable(s => s.Mode(GridSelectionMode.Multiple))
             .DataSource(dataSource => dataSource
             .Ajax()
             .Read(read => read.Action("GetTasksByTeamMember", "Tasks"))
+            
         )
 )
 

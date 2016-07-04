@@ -10,7 +10,7 @@
 
 
 @{
-    if (ViewBag.userName == "Cosmin Popescu")
+    if ((HttpContext.Current.User.Identity.Name == "Cosmin Popescu") || (HttpContext.Current.User.Identity.Name == "CosminPopescu"))
     {
         @Html.ActionLink("Creati task-uri", "AddTask", "Tasks", null, htmlAttributes: new { @class = "btn btn-primary" })
 
@@ -22,7 +22,7 @@
 
 @Html.ActionLink("Vedeti task-urile dumneavoastra", "ViewByMember", "Tasks", null, htmlAttributes: new { @class = "btn btn-primary" })
 
-
+@Html.ActionLink("Status task dumneavoastra", "EditTaskStatus", "Tasks", null, htmlAttributes: new { @class = "btn btn-primary" })
 
 
 

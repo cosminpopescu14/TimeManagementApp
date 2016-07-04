@@ -57,6 +57,11 @@ namespace ProiectLicenta.Controllers
            return View();
         }
 
+        public ActionResult EditTaskStatus()
+        {
+            return View();
+        }
+
         [Authorize]
         public ActionResult GetTasksType([DataSourceRequest] DataSourceRequest request)
         {
@@ -87,33 +92,17 @@ namespace ProiectLicenta.Controllers
                         Data_Sfarsit_Task = task.Data_Sfarsit_Task,
                     };
 
-                    IQueryable<int> taskId = from t in pl.Tasks
-                                 select new
-                                 {
-                                    t.Id
-                                 }.Id;
-
-                    IQueryable<int> userId = from u in pl.Utilizatoris
-                                 join ee in pl.Echipa_Eveniment on u.Id equals ee.Id_Utilizator
-                                 select new
-                                 {
-                                     u.Id
-                                 }.Id;
-
-                    var x = new MembruEchipaXTask
-                    {
-                        Id_Task = Convert.ToInt32(taskId),
-                        Id_Utilizator = Convert.ToInt32(userId)
-                    };
+       
+                 
 
                     pl.Tasks.Add(tasks);
-                    pl.MembruEchipaXTask.Add(x);
                     pl.SaveChanges();
+                    //AddInTaskXUser();
                 }
-
+                
                 catch (Exception ex)//sare aici, nu executa insert. exceptie datorata unui nume gresit de tabel. entityt foloseste varianta la plural a numelui
                 {
-                    throw ex;
+                    ViewBag.err = ex.InnerException; 
                 }
             }
 
@@ -125,6 +114,30 @@ namespace ProiectLicenta.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest, message);
             }
             return RedirectToAction("Index");
+        }
+
+        public void AddInTaskXUser()
+        {
+            try
+            {
+                int taskId = pl.Tasks.OrderByDescending(t => t.Id).Select(task => task.Id).First();
+                int userId = pl.Utilizatoris.OrderByDescending(u => u.Id).Select(user => user.Id).First();
+
+                var TaskXUser = new MembruEchipaXTask
+                {
+                    Id_Task = taskId,
+                    Id_Utilizator = userId
+                };
+
+                pl.MembruEchipaXTask.Add(TaskXUser);
+                pl.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            
         }
 
         public ActionResult Test([DataSourceRequest] DataSourceRequest request)
@@ -182,7 +195,9 @@ namespace ProiectLicenta.Controllers
                         u.Nume_Utilizator,
                         task.Descriere_Suplimentara,
                         task.Data_Creare_Task,
-                        task.Data_Sfarsit_Task
+                        task.Data_Sfarsit_Task,
+                        task.Stare_Task,
+                        task.Id
                     };
 
             DataSourceResult results = x.ToDataSourceResult(request);
